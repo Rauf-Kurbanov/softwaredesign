@@ -1,0 +1,1 @@
+I didn't have to explore app architecture at all to add new commands, which is clear sign of good modularity and weak coupling.
