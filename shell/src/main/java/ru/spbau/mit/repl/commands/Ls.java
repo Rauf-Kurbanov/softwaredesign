@@ -13,13 +13,20 @@ import java.util.List;
  * Lists directory content
  */
 public class Ls implements Command {
-    @Override
-    public void execute(List<String> arguments, InputStream input, PrintStream output) throws IOException {
-        final Path pwd = Paths.get(System.getProperty("user.dir"));
-
-        final File[] files = pwd.toFile().listFiles();
-        if (null == files)
-            return;
-        Arrays.stream(files).sorted().forEach(file -> output.println(file.getName()));
+  @Override
+  public void execute(List<String> arguments, InputStream input, PrintStream output) throws IOException {
+    final Path pwd = Paths.get(System.getProperty("user.dir"));
+    File[] files;
+    if (arguments.size() == 0) {
+      files = pwd.toFile().listFiles();
+    } else {
+      final String directory = arguments.get(0);
+      final File path = new File(pwd.toFile(), directory);
+      files = path.listFiles();
     }
+
+    if (null == files)
+      return;
+    Arrays.stream(files).sorted().forEach(file -> output.println(file.getName()));
+  }
 }
